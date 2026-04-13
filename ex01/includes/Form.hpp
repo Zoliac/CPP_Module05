@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpatin <lpatin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/03 15:22:33 by lpatin            #+#    #+#             */
-/*   Updated: 2026/04/08 10:35:03 by lpatin           ###   ########.fr       */
+/*   Created: 2026/04/08 10:40:04 by lpatin            #+#    #+#             */
+/*   Updated: 2026/04/08 17:19:44 by lpatin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
+#include "Bureaucrat.hpp"
 
-class Bureaucrat{
+class Bureaucrat;
+
+class Form{
 	private:
 		const std::string _name;
-		int _grade;
+		bool _is_signed;
+		const int _req_grade_sign;
+		const int _req_grade_exec;
 	public:
-		Bureaucrat();
-		Bureaucrat(const std::string& name, int grade);
-		Bureaucrat& operator=(const Bureaucrat& name);
-		~Bureaucrat();
+		Form();
+		Form(const std::string name, int sign_grade, int exec_grade);
+		Form(const Form &other);
+		Form& operator=(const Form other);
+		~Form();
+		void beSigned(Bureaucrat &employee);
+		bool getStatus() const;
 		std::string getName() const;
-		int getGrade() const;
-		void incGrade();
-		void decGrade();
+		int	getSignGrade() const;
+		int	getExecGrade() const;
 		class GradeTooHighException : public std::exception {
 			public:
 				const char* what() const throw();
@@ -35,5 +42,6 @@ class Bureaucrat{
 			public:
 				const char* what() const throw();
 		};
-	};
-std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
+};
+
+std::ostream &operator<<(std::ostream &out, Form &tmp);
